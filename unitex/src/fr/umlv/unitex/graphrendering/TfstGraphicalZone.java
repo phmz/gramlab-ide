@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
@@ -53,18 +53,18 @@ import fr.umlv.unitex.undo.SelectEdit;
 
 /**
  * This class describes a component on which a sentence graph can be drawn.
- * 
+ *
  * @author Sébastien Paumier
  */
 public class TfstGraphicalZone extends GenericGraphicalZone implements
 		Printable {
-	
+
 	TaggingModel model;
 	int sentence=-1;
 
 	/**
 	 * Constructs a new <code>TfstGraphicalZone</code>.
-	 * 
+	 *
 	 * @param t
 	 *            text field to edit box contents
 	 * @param p
@@ -132,22 +132,32 @@ public class TfstGraphicalZone extends GenericGraphicalZone implements
 				 * In the text automaton, Ctrl+click is used to select a box for
 				 * tagging
 				 */
-				boxSelected = getSelectedBox((int) (e.getX() / scaleFactor),
-						(int) (e.getY() / scaleFactor));
-				if (boxSelected != -1) {
-					// if we click on a box
-					b = (TfstGraphBox) graphBoxes.get(boxSelected);
-					model.selectBox(b);
-				}
-			} else {
-				boxSelected = getSelectedBox((int) (e.getX() / scaleFactor),
-						(int) (e.getY() / scaleFactor));
-				if (boxSelected != -1) {
-					// if we click on a box
-					b = (TfstGraphBox) graphBoxes.get(boxSelected);
-					if (!selectedBoxes.isEmpty()) {
-						// if there are selected boxes, we rely them to the
-						// current
+        boxSelected = getSelectedBox((int) (e.getX() / scaleFactor),
+          (int) (e.getY() / scaleFactor));
+        if (boxSelected != -1) {
+          // if we click on a box
+          b = (TfstGraphBox) graphBoxes.get(boxSelected);
+          model.selectBox(b);
+        } else {
+          if (selectedBoxes.size() == 1) {
+            TfstGraphBox selected = (TfstGraphBox) selectedBoxes.get(0);
+            unSelectAllBoxes();
+            b = (TfstGraphBox) createBox((int) (e.getX() / scaleFactor),
+              (int) (e.getY() / scaleFactor));
+            Bounds bounds = selected.getBounds();
+            b.setBounds(new Bounds(bounds.getStart_in_tokens(),bounds.getStart_in_chars(),bounds.getStart_in_letters(),
+              bounds.getEnd_in_tokens(),bounds.getEnd_in_chars(),bounds.getEnd_in_letters()));
+          }
+        }
+      } else {
+        boxSelected = getSelectedBox((int) (e.getX() / scaleFactor),
+          (int) (e.getY() / scaleFactor));
+        if (boxSelected != -1) {
+          // if we click on a box
+          b = (TfstGraphBox) graphBoxes.get(boxSelected);
+          if (!selectedBoxes.isEmpty()) {
+            // if there are selected boxes, we rely them to the
+            // current
 						addTransitionsFromSelectedBoxes(b, true);
 						unSelectAllBoxes();
 					} else {
@@ -286,7 +296,7 @@ public class TfstGraphicalZone extends GenericGraphicalZone implements
 	/**
 	 * Draws the graph. This method should only be called by the virtual
 	 * machine.
-	 * 
+	 *
 	 * @param f_old
 	 *            the graphical context
 	 */
@@ -296,7 +306,7 @@ public class TfstGraphicalZone extends GenericGraphicalZone implements
 		DrawGraphParams params = defaultDrawParams();
 		drawGraph(f,params);
 	}
-		
+
 	@Override
 	public void drawGraph(Graphics2D f, DrawGraphParams params) {
 		f.setRenderingHint(
@@ -347,7 +357,7 @@ public class TfstGraphicalZone extends GenericGraphicalZone implements
 
 	/**
 	 * Prints the graph.
-	 * 
+	 *
 	 * @param g
 	 *            the graphical context
 	 * @param p
@@ -426,9 +436,9 @@ public class TfstGraphicalZone extends GenericGraphicalZone implements
 		}
 	}
 
-	
+
 	private HashMap<Integer,TaggingState[]> stateSelection=new HashMap<Integer,TaggingState[]>();
-	
+
 	public void setup(GraphIO g,int sentence) {
 		/* First, we save the previous state selection if any */
 		if (this.sentence!=-1) {
@@ -470,11 +480,11 @@ public class TfstGraphicalZone extends GenericGraphicalZone implements
 		stateSelection.put(n,null);
 		model.resetModel();
 	}
-	
+
 	public void saveStateSelection(int n) {
 		stateSelection.put(n,model.getTaggingStates());
 	}
-	
+
 	public TaggingModel getTaggingModel() {
 		return model;
 	}
@@ -513,12 +523,12 @@ public class TfstGraphicalZone extends GenericGraphicalZone implements
 	public void resetAllStateSelections() {
 		stateSelection.clear();
 	}
-	
+
 	public Integer[] getModifiedSentenceIndices() {
 		Integer[] tab=new Integer[stateSelection.keySet().size()];
 		stateSelection.keySet().toArray(tab);
 		Arrays.sort(tab);
 		return tab;
 	}
-	
+
 }
