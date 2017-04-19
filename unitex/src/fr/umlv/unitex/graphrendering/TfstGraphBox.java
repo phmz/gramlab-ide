@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
@@ -35,7 +35,7 @@ import fr.umlv.unitex.tfst.Bounds;
 
 /**
  * This class describes a box of a sentence automaton.
- * 
+ *
  * @author Sébastien Paumier
  */
 public class TfstGraphBox extends GenericGraphBox {
@@ -43,7 +43,7 @@ public class TfstGraphBox extends GenericGraphBox {
 
 	/**
 	 * Constructs a new box
-	 * 
+	 *
 	 * @param x
 	 *            X coordinate of the input point of the box
 	 * @param y
@@ -60,7 +60,7 @@ public class TfstGraphBox extends GenericGraphBox {
 	/**
 	 * Takes a <code>String</code> representing the box content and tokenizes it
 	 * to divide it into several lines
-	 * 
+	 *
 	 * @param s
 	 *            the box content
 	 */
@@ -161,7 +161,7 @@ public class TfstGraphBox extends GenericGraphBox {
 
 	/**
 	 * Sets the content of the box
-	 * 
+	 *
 	 * @param s
 	 *            the content
 	 */
@@ -229,7 +229,7 @@ public class TfstGraphBox extends GenericGraphBox {
 	/**
 	 * Draws a transition to a box. Modified from GenericGraphBox in order to
 	 * display bold colored transitions.
-	 * 
+	 *
 	 * @param gr
 	 *            the graphical context
 	 */
@@ -280,6 +280,11 @@ public class TfstGraphBox extends GenericGraphBox {
 					getBoxNumber(), c));
 		}
 		super.drawOther(g, params);
+		if (bounds != null) {
+		  g.setColor(GraphDecoratorConfig.DEBUG_COLOR);
+      g.setFont(parentGraphicalZone.getGraphPresentationInfo().getOutput().getFont());
+      g.drawString(bounds.toString(), X1 + 5, Y1 + Height + 15 + g.getFontMetrics().getHeight());
+    }
 		g.setComposite(c);
 		params.setBackgroundColor(old);
 	}

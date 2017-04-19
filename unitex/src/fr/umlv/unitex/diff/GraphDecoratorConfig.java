@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
@@ -43,6 +43,7 @@ public class GraphDecoratorConfig {
 	public static final Color KOREAN_LINEAR_TFST = new Color(0xCA, 0xE4, 0xEB);
 	public static final Color UNAMBIGUOUS_KOREAN = new Color(0xCC, 0xEB, 0x94);
 	public static final Color KOREAN_UNTAGGED_TOKEN_COLOR = new Color(0xCC, 0xCC, 0xFF);
+	public static final Color DEBUG_COLOR = new Color(161, 128, 188);
 	public static final Stroke STROKE = new BasicStroke(3);
 	public static final Stroke KOREAN_HIGHLIGHT_STROKE = new BasicStroke(5);
 }
