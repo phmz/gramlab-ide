@@ -27,24 +27,24 @@
 			<fileset dir="${build-dir}" includes="**/*" />
 		</delete>
     <delete dir="${build-dir}" />
-    
+
 		<echo message="Deleting files in ${classes-dir}" level="info" />
 		<delete includeemptydirs="true" quiet="true">
 			<fileset dir="${classes-dir}" includes="**/*" />
 		</delete>
     <delete dir="${classes-dir}" />
-    
+
 		<echo message="Deleting files in ${dist-dir}" level="info" />
 		<delete includeemptydirs="true" quiet="true">
 			<fileset dir="${dist-dir}" includes="**/*" />
 		</delete>
-    <delete dir="${dist-dir}" />    
+    <delete dir="${dist-dir}" />
 	</target>
 
 	<target name="compile" depends="init" description="compile the source">
 		<!-- Compile the java source code -->
 		<javac target="1.7" source="1.7" encoding="UTF-8" srcdir="${src-dir}" destdir="${build-dir}" includeAntRuntime="false">
-		<compilerarg value="-Xlint:-options"/>	
+		<compilerarg value="-Xlint:-options"/>
 			<classpath>
 				<fileset dir="${lib-dir}">
 					<include name="*.jar" />
@@ -63,16 +63,16 @@
 
 	<target name="dist" depends="clean,compile" description="generate the distribution">
 		<!-- create Unitex.jar -->
-		<jar jarfile="${dist-dir}/Unitex.jar" manifest="classes/fr/umlv/unitex/Manifest.mf" basedir="classes" excludes="classes/fr/loria/**">
-			<zipgroupfileset dir="${lib-dir}" includes="juniversalchardet-1.0.3.jar"></zipgroupfileset>	
+		<jar jarfile="D:/Unitex-GramLab/App/Unitex.jar" manifest="classes/fr/umlv/unitex/Manifest.mf" basedir="classes" excludes="classes/fr/loria/**">
+			<zipgroupfileset dir="${lib-dir}" includes="juniversalchardet-1.0.3.jar"></zipgroupfileset>
 		</jar>
 		<!-- create XAlign.jar -->
 		<jar jarfile="${dist-dir}/XAlign.jar" manifest="classes/fr/loria/Manifest.mf" basedir="classes" excludes="classes/fr/umlv/**" />
 	</target>
 
-  <target name="install-init">	
+  <target name="install-init">
 		<fail unless="env.UNITEX_BUILD_RELEASE_DIR" message="UNITEX_BUILD_RELEASE_DIR is not set. try `export UNITEX_BUILD_RELEASE_DIR=.`"/>
-    <property name="unitexHome" value="${env.UNITEX_BUILD_RELEASE_DIR}"/>		
+    <property name="unitexHome" value="${env.UNITEX_BUILD_RELEASE_DIR}"/>
 		<property name="app-dir" location="${unitexHome}/App" />
 		<property name="app-lib-dir" location="${unitexHome}/App/lib" />
 	</target>
@@ -82,13 +82,13 @@
 			<fileset dir="${dist-dir}" />
 			<fileset dir="${resources-dir}">
 				<include name="*.ico" />
-			</fileset>			
+			</fileset>
 		</copy>
 		<copy todir="${app-lib-dir}">
 			<fileset dir="${lib-dir}">
 				<include name="*.jar" />
 			</fileset>
-		</copy>		
+		</copy>
 	</target>
 </project>
 
