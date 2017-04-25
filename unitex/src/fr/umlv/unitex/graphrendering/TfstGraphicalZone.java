@@ -149,17 +149,27 @@ public class TfstGraphicalZone extends GenericGraphicalZone implements
               bounds.getEnd_in_tokens(),bounds.getEnd_in_chars(),bounds.getEnd_in_letters()));
           }
         }
-      } else {
-        boxSelected = getSelectedBox((int) (e.getX() / scaleFactor),
-          (int) (e.getY() / scaleFactor));
-        if (boxSelected != -1) {
-          // if we click on a box
-          b = (TfstGraphBox) graphBoxes.get(boxSelected);
-          if (!selectedBoxes.isEmpty()) {
-            // if there are selected boxes, we rely them to the
-            // current
-						addTransitionsFromSelectedBoxes(b, true);
-						unSelectAllBoxes();
+			} else {
+				boxSelected = getSelectedBox((int) (e.getX() / scaleFactor),
+						(int) (e.getY() / scaleFactor));
+				if (boxSelected != -1) {
+					// if we click on a box
+					b = (TfstGraphBox) graphBoxes.get(boxSelected);
+					if (!selectedBoxes.isEmpty()) {
+						// if there are selected boxes, we rely them to the
+						// current
+            // we make sure that the new transition will not
+            // create a cycle
+            boolean changeIsValid = false;
+            for(GenericGraphBox box : selectedBoxes) {
+              ArrayList<GenericGraphBox> newTransition = new ArrayList<GenericGraphBox>();
+              newTransition.add(b);
+              changeIsValid = !isCycle(box, newTransition);
+            }
+            if(changeIsValid) {
+              addTransitionsFromSelectedBoxes(b, true);
+              unSelectAllBoxes();
+            }
 					} else {
 						// if not, we just select this one
 						b.setSelected(true);
