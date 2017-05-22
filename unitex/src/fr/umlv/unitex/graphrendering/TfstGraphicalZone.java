@@ -126,6 +126,10 @@ public class TfstGraphicalZone extends GenericGraphicalZone implements
 				} else {
 					// simple click not on a box
 					unSelectAllBoxes();
+          b = (TfstGraphBox) createBox((int) (e.getX() / scaleFactor),
+            (int) (e.getY() / scaleFactor));
+          Bounds bounds = new Bounds(0,0,0,0,0,0);
+          b.setBounds(bounds);
 				}
 			} else if (e.isControlDown() || e.getButton() == MouseEvent.BUTTON3) {
 				/*
